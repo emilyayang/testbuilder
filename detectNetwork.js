@@ -79,22 +79,22 @@ function createArr(){
 //   }
 // }
 
-var detectNetwork = function(cardNumber) {
-  var cards = {
+// var detectNetwork = function(cardNumber) {
+//   var cards = {
 
-    "Diner's Club":{ "Prefix": [38, 39], "Length": [14] },
-    "American Express":{ "Prefix": [37, 34], "Length": [15]},
-    "Visa":{ "Prefix": [4], "Length": [13, 16, 19]},
-    "MasterCard":{ "Prefix": [51, 52, 53, 54, 55], "Length": [16]},
-    "Discover":{ "Prefix": [[6011], [644, 645, 646, 647, 648, 649], [65]], "Length": [16, 19] },
-    "Maestro":{ "Prefix": [5018, 5020, 5038, 6304], "Length": [12, 13, 14, 15, 16, 17, 18, 19]},
-    "China UnionPay":{ 
-      "Prefix":[createArr(), [624, 625, 626], [6282, 6283, 6284, 6285, 6286, 6287, 6288]],
-      "Length": [16, 17, 18, 19]
-    },
-    "Switch":{ "Prefix": [[4903, 4905, 4911, 4936, 6333, 6759], [564182, 633110]], "Length": [16, 18, 19]},
+//     "Diner's Club":{ "Prefix": [38, 39], "Length": [14] },
+//     "American Express":{ "Prefix": [37, 34], "Length": [15]},
+//     "Visa":{ "Prefix": [4], "Length": [13, 16, 19]},
+//     "MasterCard":{ "Prefix": [51, 52, 53, 54, 55], "Length": [16]},
+//     "Discover":{ "Prefix": [[6011], [644, 645, 646, 647, 648, 649], [65]], "Length": [16, 19] },
+//     "Maestro":{ "Prefix": [5018, 5020, 5038, 6304], "Length": [12, 13, 14, 15, 16, 17, 18, 19]},
+//     "China UnionPay":{ 
+//       "Prefix":[createArr(), [624, 625, 626], [6282, 6283, 6284, 6285, 6286, 6287, 6288]],
+//       "Length": [16, 17, 18, 19]
+//     },
+//     "Switch":{ "Prefix": [[4903, 4905, 4911, 4936, 6333, 6759], [564182, 633110]], "Length": [16, 18, 19]},
   
-  }
+//   }
   //loop through cards to access card
   //if cardnumber[0] === 4
     //if slice cardnumber 4 equals 4903, 4905, 4911, 4936 return switch, else return visa
@@ -106,33 +106,33 @@ var detectNetwork = function(cardNumber) {
   //else determine length of prefix[0]
     //slice off the first length of nums that equal prefix[0] length
     //if prefix includes numprefix, return card
-    for (var key in cards) {
-      var card = cards[key];
-      var exclude = [4903, 4905, 4911, 4936]
-      if (cardNumber[0] === '4') { //cardNumber[0] === '4'
-          if(exclude.includes(Number(cardNumber.slice(0,4))) && cards['Switch']['Length'].includes(cardNumber.length)){
-            return "Switch";
-           } else {
-            return "Visa";
-          }
-      }
-      if (Array.isArray(card["Prefix"][0])) {
-        for (var j = 0; j < card["Prefix"].length; j++) {
-          var length = card["Prefix"][j][0].toString().length; //needs to be string not num for length
-          var pre = Number(cardNumber.slice(0,length));//needs to be num to compare to values
-          if (card["Prefix"][j].includes(pre) && card["Length"].includes(cardNumber.length)) {  
-            return key;
-          }
-        }
-      } else {
-          var length = card["Prefix"][0].toString().length;
-          var pre = Number(cardNumber.slice(0,length));
-          if (card["Prefix"].includes(pre) && card["Length"].includes(cardNumber.length)) {
-            return key;
-        }
-      }
-    }
-}
+//     for (var key in cards) {
+//       var card = cards[key];
+//       var exclude = [4903, 4905, 4911, 4936]
+//       if (cardNumber[0] === '4') { //cardNumber[0] === '4'
+//           if(exclude.includes(Number(cardNumber.slice(0,4))) && cards['Switch']['Length'].includes(cardNumber.length)){
+//             return "Switch";
+//            } else {
+//             return "Visa";
+//           }
+//       }
+//       if (Array.isArray(card["Prefix"][0])) {
+//         for (var j = 0; j < card["Prefix"].length; j++) {
+//           var length = card["Prefix"][j][0].toString().length; //needs to be string not num for length
+//           var pre = Number(cardNumber.slice(0,length));//needs to be num to compare to values
+//           if (card["Prefix"][j].includes(pre) && card["Length"].includes(cardNumber.length)) {  
+//             return key;
+//           }
+//         }
+//       } else {
+//           var length = card["Prefix"][0].toString().length;
+//           var pre = Number(cardNumber.slice(0,length));
+//           if (card["Prefix"].includes(pre) && card["Length"].includes(cardNumber.length)) {
+//             return key;
+//         }
+//       }
+//     }
+// }
 
 // var detectNetwork = function(cardNumber) {
 //   // Note: `cardNumber` will always be a string
@@ -188,3 +188,68 @@ var detectNetwork = function(cardNumber) {
 // };
 
 
+
+//Refactored Code
+
+var newArr = [];
+for (var i = 622126; i <= 622925; i++) {
+  newArr.push(i.toString());
+}
+for (var j = 624; j <= 626; j++){
+  newArr.push(j.toString());
+}
+for (var k = 6282; k <= 6288; k++){
+  newArr.push(k.toString());
+}
+
+var object = {
+  'Diner\'s Club': {
+    'length': [14],
+    'prefix': ['38', '39']
+  },
+  'American Express': { 
+    'length': [15],
+    'prefix': ['34', '37']
+  },
+  'Switch': { 
+    'length': [16, 18, 19],
+    'prefix': ['4903', '4905', '4911', '4936', '6759', '6333', '633110', '564182']
+  },
+  'Visa': { 
+    'length': [13, 16, 19],
+    'prefix': ['4']
+  },
+  'MasterCard': { 
+    'length': [16],
+    'prefix': ['51', '52', '53', '54', '55']
+  },
+  'Discover':{ 
+    'length': [16, 19],
+    'prefix': ['6011', '644', '645', '646', '647', '648', '649', '65']
+  },
+  'Maestro': { 
+    'length': [12, 13, 14, 15, 16, 17, 18, 19],
+    'prefix': ['5018', '5020', '5038', '6304']
+  },
+  'China UnionPay': { 
+    'length': [16, 17, 18, 19],
+    'prefix': newArr
+  }
+};
+
+//Refactored even further
+var detectNetwork = function(cardNumber) {
+  for (var key in object) {
+    var prefixLength;
+    var start;
+    if (object[key]['length'].includes(cardNumber.length)) {
+      for (var l = 0; l < object[key]['prefix'].length; l++) {
+        prefixLength = object[key]['prefix'][l].length; //length of the prefix at each index of the length array
+        start = cardNumber.substring(0, prefixLength);
+        if (object[key]['prefix'][l] === start) {
+          return key;
+        }
+      }
+    }
+  }
+}
