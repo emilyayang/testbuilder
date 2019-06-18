@@ -137,7 +137,7 @@ describe('MasterCard', function() {
 
 describe('Discover', function() {
 
-  var should = chai.should;
+  var should = chai.should();
   // Tests without a function will be marked as "pending" and not run
   // Implement these tests (and others) and make them pass!
   // Discover always has a prefix of 6011, 644-649, or 65, and a length of 16 or 19.
